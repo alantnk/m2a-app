@@ -24,7 +24,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("system/", include("system.urls")),
-    path("/", RedirectView.as_view(url="system/dashboard/")),
+    path("", RedirectView.as_view(url="system/dashboard/")),
 ]
 
 if settings.DEBUG:

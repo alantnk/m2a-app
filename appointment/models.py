@@ -10,13 +10,22 @@ STATUS_CHOICES = [
 class Schedule(models.Model):
     date_time = models.DateTimeField()
     professional = models.ForeignKey(
-        "record.Professional", null=True, on_delete=models.SET_NULL
+        "record.Professional",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="schedules",
     )  # noqa E501
     service = models.ForeignKey(
-        "record.Service", null=True, on_delete=models.SET_NULL
-    )  # noqa E501
+        "record.Service",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="schedules",  # noqa E501
+    )
     customer = models.ForeignKey(
-        "record.Customer", null=True, on_delete=models.SET_NULL
+        "record.Customer",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="schedules",
     )
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default="1"
