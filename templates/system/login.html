@@ -1,15 +1,39 @@
-{% extends "shared/base.html" %}
-{% block title %}Login{% endblock title %}
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
 
-{% block content %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+    <title>Login</title>
 
-<div>
-    <h2>LOGIN</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{form.as_p}}
-      <button type="submit">Log In</button>
-    </form>
-</div>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.png' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/_base.css' %}" />
+  </head>
 
-{% endblock content %}
+  <body>
+
+    <div class="container">
+
+      <div>
+        <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-primary">
+            Log In
+          </button>
+        {% endbuttons %}
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>

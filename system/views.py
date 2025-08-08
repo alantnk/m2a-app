@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
@@ -19,6 +20,11 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, "system/login.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse("system:login"))
 
 
 @login_required
