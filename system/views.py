@@ -15,7 +15,11 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse("system:dashboard"))
+                next_path = request.GET.get(
+                    "next",
+                    reverse("system:dashboard"),
+                )
+                return redirect(next_path)
     else:
         form = AuthenticationForm()
 
