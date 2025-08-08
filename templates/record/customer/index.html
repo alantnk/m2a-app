@@ -1,0 +1,9 @@
+{% extends "shared/_base.html" %}
+{% block title %}Lista Clientes{% endblock title %}
+
+{% block content %}
+
+{% include "shared/table.html" with object_list=page_obj.object_list %}
+{% include "shared/pagination.html" %}
+
+{% endblock content %}
