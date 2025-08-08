@@ -1,10 +1,10 @@
 {% extends "shared/_base.html" %}
-{% block title %}Lista Clientes{% endblock title %}
+{% block title %}Resuldados para "{{ search_query }}"{% endblock title %}
 
 {% block content %}
-
 {% url 'record:search_customer' as search_url %}
 {% include "shared/search-form.html" with action=search_url %}
 {% include "shared/table.html" with object_list=page_obj.object_list %}
 {% include "shared/pagination.html" %}
+
 {% endblock content %}
