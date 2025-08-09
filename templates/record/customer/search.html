@@ -8,7 +8,7 @@
     {% include "shared/search-form.html" with action=search_url %}
     <p>Mostrando resultados de <strong>{{ search_query }}</strong></p>
 </div>
-{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" %}
+{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" delete_url="record:delete_customer" %}
 {% include "shared/pagination.html" %}
 
 {% endblock content %}

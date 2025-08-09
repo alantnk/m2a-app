@@ -68,7 +68,18 @@ def update_customer_view(request, pk):
 
 @login_required
 def delete_customer_view(request, pk):
-    return HttpResponse(f"Delete customer {pk}")
+    customer = get_object_or_404(Customer, pk=pk)
+    if request.method == "POST":
+        customer.delete()
+        success(request, "Cliente excluído com sucesso!")
+        return redirect(reverse("record:index_customer"))
+    return render(
+        request,
+        "record/customer/delete.html",
+        {
+            "customer": customer,
+        },
+    )
 
 
 @require_http_methods(["GET"])

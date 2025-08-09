@@ -9,6 +9,6 @@
     {% include "shared/search-form.html" with action=search_url %}
     {% include "shared/ordering-buttons.html" %}
 </div>
-{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" %}
+{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" delete_url="record:delete_customer" %}
 {% include "shared/pagination.html" %}
 {% endblock content %}
