@@ -23,7 +23,8 @@ body {
     margin: 10px 0;
 }
 
-.ordering-buttons {
+.ordering-buttons,
+.add-button {
     display: flex;
     justify-content: center;
     align-items: center;
