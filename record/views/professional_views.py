@@ -57,7 +57,35 @@ def create_professional_view(request):
 
 @login_required
 def update_professional_view(request, pk):
-    return HttpResponse(f"Update professional with ID {pk}")
+    professional = get_object_or_404(Professional, pk=pk)
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            professional.name = form.cleaned_data["name"]
+            professional.email = form.cleaned_data["email"]
+            professional.save()
+            success(request, CREATE_SUCCESS_MESSAGE)
+            return redirect(reverse("record:index_professional"))
+        else:
+            error(
+                request,
+                CREATE_ERROR_MESSAGE,  # noqa: E501
+            )
+    else:
+        form = ContactForm(
+            initial={
+                "name": professional.name,
+                "email": professional.email,
+            }
+        )
+    return render(
+        request,
+        "record/professional/update.html",
+        {
+            "form": form,
+            "professional": professional,
+        },
+    )
 
 
 @login_required
