@@ -4,7 +4,7 @@ from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from record.models import Customer
-from record.forms import CustomerForm
+from record.forms import ContactForm
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
 
@@ -36,7 +36,7 @@ def index_customer_view(request):
 @login_required
 def create_customer_view(request):
     if request.method == "POST":
-        form = CustomerForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
@@ -46,7 +46,7 @@ def create_customer_view(request):
         else:
             error(request, CREATE_ERROR_MESSAGE)
     else:
-        form = CustomerForm()
+        form = ContactForm()
     return render(
         request,
         "record/customer/create.html",
@@ -60,7 +60,7 @@ def create_customer_view(request):
 def update_customer_view(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == "POST":
-        form = CustomerForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
             customer.name = form.cleaned_data["name"]
             customer.email = form.cleaned_data["email"]
@@ -73,7 +73,7 @@ def update_customer_view(request, pk):
                 CREATE_ERROR_MESSAGE,  # noqa: E501
             )
     else:
-        form = CustomerForm(
+        form = ContactForm(
             initial={
                 "name": customer.name,
                 "email": customer.email,

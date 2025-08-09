@@ -1,8 +1,7 @@
 from django import forms
-from .models import Customer, Service, Professional
 
 
-class CustomerForm(forms.Form):
+class ContactForm(forms.Form):
     name = forms.CharField(
         label="Nome",
         max_length=100,

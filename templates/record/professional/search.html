@@ -1,0 +1,14 @@
+{% extends "shared/_base.html" %}
+{% block title %}Profissionais - Resuldados para "{{ search_query }}"{% endblock title %}
+
+{% block content %}
+<h2>Busca Profissional "{{ search_query }}"</h2>
+{% url 'record:search_professional' as search_url %}
+<div class="d-flex justify-content-between align-items-center">
+    {% include "shared/search-form.html" with action=search_url %}
+    <p>Mostrando resultados de <strong>{{ search_query }}</strong></p>
+</div>
+{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_professional" delete_url="record:delete_professional" %}
+{% include "shared/pagination.html" %}
+
+{% endblock content %}
