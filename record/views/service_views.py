@@ -57,7 +57,28 @@ def create_service_view(request):
 
 @login_required
 def update_service_view(request, pk):
-    return HttpResponse(f"Update service view for service {pk}")
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == "POST":
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            service.title = title
+            service.save()
+            success(request, SAVE_SUCCESS_MESSAGE)
+            return redirect(reverse("record:index_service"))
+        else:
+            error(request, SAVE_ERROR_MESSAGE)
+    else:
+        form = ServiceForm(initial={"title": service.title})
+
+    return render(
+        request,
+        "record/service/update.html",
+        {
+            "form": form,
+            "service": service,
+        },
+    )
 
 
 @login_required
