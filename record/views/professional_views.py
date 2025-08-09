@@ -120,3 +120,12 @@ def search_professional_view(request):
             "search_query": query,
         },
     )
+
+
+"__all__" == [
+    "index_professional_view",
+    "create_professional_view",
+    "update_professional_view",
+    "delete_professional_view",
+    "search_professional_view",
+]

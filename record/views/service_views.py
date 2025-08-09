@@ -45,4 +45,25 @@ def delete_service_view(request, pk):
 @login_required
 @require_GET
 def search_service_view(request):
-    return HttpResponse("Search service view")
+    query = request.GET.get("q", "")
+    customers = Service.objects.filter(title__icontains=query)
+    paginator = Paginator(customers, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(
+        request,
+        "record/service/search.html",
+        {
+            "page_obj": page_obj,
+            "search_query": query,
+        },
+    )
+
+
+"__all__" == [
+    "index_service_view",
+    "create_service_view",
+    "update_service_view",
+    "delete_service_view",
+    "search_service_view",
+]
