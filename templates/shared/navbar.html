@@ -13,8 +13,16 @@
           <a class="nav-link" href="#">Serviços</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Profissionais</a>
+          <a class="nav-link" href="{% url 'record:index_professional' %}">Profissionais</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Agendamentos</a>
+        </li>
+        {% if user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="#">Relatórios</a>
+        </li>
+        {% endif %}
       </ul>
       <a href="{% url 'system:logout' %}" class="btn btn-outline-dark">Sair</a>
 
