@@ -7,7 +7,6 @@ from record.models import Professional
 from record.forms import ContactForm
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
-from django.http import HttpResponse
 
 
 CREATE_SUCCESS_MESSAGE = "Profissional salvo com sucesso!"
@@ -90,7 +89,18 @@ def update_professional_view(request, pk):
 
 @login_required
 def delete_professional_view(request, pk):
-    return HttpResponse(f"Delete professional with ID {pk}")
+    professional = get_object_or_404(Professional, pk=pk)
+    if request.method == "POST":
+        professional.delete()
+        success(request, "Cliente excluído com sucesso!")
+        return redirect(reverse("record:index_professional"))
+    return render(
+        request,
+        "record/professional/delete.html",
+        {
+            "professional": professional,
+        },
+    )
 
 
 @login_required
