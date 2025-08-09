@@ -9,8 +9,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
 
 
-CREATE_SUCCESS_MESSAGE = "Cliente salvo com sucesso!"
-CREATE_ERROR_MESSAGE = (
+SAVE_SUCCESS_MESSAGE = "Cliente salvo com sucesso!"
+SAVE_ERROR_MESSAGE = (
     "Ocorreu um erro ao salvar o cliente. Por favor, verifique os dados."  # noqa: E501
 )
 
@@ -40,10 +40,10 @@ def create_customer_view(request):
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             Customer.objects.create(name=name, email=email)
-            success(request, CREATE_SUCCESS_MESSAGE)
+            success(request, SAVE_SUCCESS_MESSAGE)
             return redirect(reverse("record:index_customer"))
         else:
-            error(request, CREATE_ERROR_MESSAGE)
+            error(request, SAVE_ERROR_MESSAGE)
     else:
         form = ContactForm()
     return render(
@@ -64,12 +64,12 @@ def update_customer_view(request, pk):
             customer.name = form.cleaned_data["name"]
             customer.email = form.cleaned_data["email"]
             customer.save()
-            success(request, CREATE_SUCCESS_MESSAGE)
+            success(request, SAVE_SUCCESS_MESSAGE)
             return redirect(reverse("record:index_customer"))
         else:
             error(
                 request,
-                CREATE_ERROR_MESSAGE,  # noqa: E501
+                SAVE_ERROR_MESSAGE,  # noqa: E501
             )
     else:
         form = ContactForm(

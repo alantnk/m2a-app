@@ -9,8 +9,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
 
 
-CREATE_SUCCESS_MESSAGE = "Profissional salvo com sucesso!"
-CREATE_ERROR_MESSAGE = "Ocorreu um erro ao salvar o profissional. Por favor, verifique os dados."  # noqa: E501
+SAVE_SUCCESS_MESSAGE = "Profissional salvo com sucesso!"
+SAVE_ERROR_MESSAGE = "Ocorreu um erro ao salvar o profissional. Por favor, verifique os dados."  # noqa: E501
 
 
 @login_required
@@ -38,10 +38,10 @@ def create_professional_view(request):
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             Professional.objects.create(name=name, email=email)
-            success(request, CREATE_SUCCESS_MESSAGE)
+            success(request, SAVE_SUCCESS_MESSAGE)
             return redirect(reverse("record:index_professional"))
         else:
-            error(request, CREATE_ERROR_MESSAGE)
+            error(request, SAVE_ERROR_MESSAGE)
     else:
         form = ContactForm()
     return render(
@@ -62,12 +62,12 @@ def update_professional_view(request, pk):
             professional.name = form.cleaned_data["name"]
             professional.email = form.cleaned_data["email"]
             professional.save()
-            success(request, CREATE_SUCCESS_MESSAGE)
+            success(request, SAVE_SUCCESS_MESSAGE)
             return redirect(reverse("record:index_professional"))
         else:
             error(
                 request,
-                CREATE_ERROR_MESSAGE,  # noqa: E501
+                SAVE_ERROR_MESSAGE,  # noqa: E501
             )
     else:
         form = ContactForm(

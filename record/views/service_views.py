@@ -9,6 +9,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
 from django.http import HttpResponse
 
+SAVE_SUCCESS_MESSAGE = "Serviço salvo com sucesso!"
+SAVE_ERROR_MESSAGE = (
+    "Ocorreu um erro ao salvar o serviço. Por favor, verifique os dados."  # noqa: E501
+)
+
 
 @login_required
 @require_GET
@@ -29,7 +34,25 @@ def index_service_view(request):
 
 @login_required
 def create_service_view(request):
-    return HttpResponse("Create service view")
+    if request.method == "POST":
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            Service.objects.create(title=title)
+            success(request, SAVE_SUCCESS_MESSAGE)
+            return redirect(reverse("record:index_service"))
+        else:
+            error(request, SAVE_ERROR_MESSAGE)
+    else:
+        form = ServiceForm()
+
+    return render(
+        request,
+        "record/service/create.html",
+        {
+            "form": form,
+        },
+    )
 
 
 @login_required
