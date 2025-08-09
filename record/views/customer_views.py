@@ -28,7 +28,6 @@ def index_customer_view(request):
         "record/customer/index.html",
         {
             "page_obj": page_obj,
-            "ordering": ordering,
         },
     )
 

@@ -6,7 +6,7 @@
 {% url 'record:search_customer' as search_url %}
 
 <div class="d-flex justify-content-between align-items-center">
-    {% include "shared/search-form.html" with action=search_url %}
+    {% include "shared/contact-search-form.html" with action=search_url %}
     {% include "shared/ordering-buttons.html" %}
     <div class="add-button">
         <a href="{% url 'record:create_customer' %}" class="btn btn-outline-success">

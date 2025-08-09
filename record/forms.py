@@ -13,7 +13,7 @@ class ContactForm(forms.Form):
     )
 
 
-class Service(forms.Form):
+class ServiceForm(forms.Form):
     title = forms.CharField(
         label="Título",
         max_length=100,

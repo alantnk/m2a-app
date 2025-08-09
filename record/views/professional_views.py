@@ -26,7 +26,6 @@ def index_professional_view(request):
         "record/professional/index.html",
         {
             "page_obj": page_obj,
-            "ordering": ordering,
         },
     )
 
