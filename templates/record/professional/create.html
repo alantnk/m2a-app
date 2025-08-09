@@ -1,11 +1,11 @@
 {% extends "shared/_base.html" %}
 {% load bootstrap5 %}
-{% block title %}Nove Cliente{% endblock title %}
+{% block title %}Novo Cliente{% endblock title %}
 {% bootstrap_messages %}
 
 {% block content %}
 
-<h2>Adicionar novo Cliente</h2>
+<h2>Adicionar novo Profissional</h2>
 <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% bootstrap_form form %}

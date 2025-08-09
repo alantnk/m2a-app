@@ -34,7 +34,25 @@ def index_professional_view(request):
 
 @login_required
 def create_professional_view(request):
-    return HttpResponse("Create a new professional")
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            Professional.objects.create(name=name, email=email)
+            success(request, CREATE_SUCCESS_MESSAGE)
+            return redirect(reverse("record:index_professional"))
+        else:
+            error(request, CREATE_ERROR_MESSAGE)
+    else:
+        form = ContactForm()
+    return render(
+        request,
+        "record/professional/create.html",
+        {
+            "form": form,
+        },
+    )
 
 
 @login_required
