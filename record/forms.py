@@ -11,3 +11,11 @@ class ContactForm(forms.Form):
         label="Email",
         widget=forms.EmailInput(attrs={"placeholder": "Email do Cliente"}),
     )
+
+
+class Service(forms.Form):
+    title = forms.CharField(
+        label="Título",
+        max_length=100,
+        widget=forms.TextInput(attrs={"placeholder": "Nome do Serviço"}),
+    )

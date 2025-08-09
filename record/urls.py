@@ -59,4 +59,32 @@ professional_urls = [
     ),
 ]
 
-urlpatterns = customer_urls + professional_urls
+service_urls = [
+    path(
+        "services/",
+        views.index_service_view,
+        name="index_service",
+    ),
+    path(
+        "services/new/",
+        views.create_service_view,
+        name="create_service",
+    ),
+    path(
+        "services/<int:pk>/edit/",
+        views.update_service_view,
+        name="update_service",
+    ),
+    path(
+        "services/<int:pk>/delete/",
+        views.delete_service_view,
+        name="delete_service",
+    ),
+    path(
+        "services/search/",
+        views.search_service_view,
+        name="search_service",
+    ),
+]
+
+urlpatterns = customer_urls + professional_urls + service_urls
