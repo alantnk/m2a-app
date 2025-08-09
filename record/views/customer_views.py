@@ -9,8 +9,9 @@ from record.models import Customer
 @login_required
 @require_http_methods(["GET"])
 def index_customer_view(request):
-    customers = Customer.objects.all().order_by("name")
-    paginator = Paginator(customers, 10)  # Show 10 customers per page
+    ordering = request.GET.get("ordering", "name")
+    customers = Customer.objects.all().order_by(ordering)
+    paginator = Paginator(customers, 4)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(
@@ -18,6 +19,7 @@ def index_customer_view(request):
         "record/customer/index.html",
         {
             "page_obj": page_obj,
+            "ordering": ordering,
         },
     )
 

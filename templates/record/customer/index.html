@@ -4,7 +4,10 @@
 {% block content %}
 
 {% url 'record:search_customer' as search_url %}
-{% include "shared/search-form.html" with action=search_url %}
+<div class="d-flex justify-content-between">
+    {% include "shared/search-form.html" with action=search_url %}
+    {% include "shared/ordering-buttons.html" %}
+</div>
 {% include "shared/table.html" with object_list=page_obj.object_list %}
 {% include "shared/pagination.html" %}
 {% endblock content %}
