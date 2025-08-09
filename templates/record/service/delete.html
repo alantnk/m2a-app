@@ -1,0 +1,23 @@
+{% extends "shared/_base.html" %}
+{% load bootstrap5 %}
+{% block title %}Excluir Serviço{% endblock title %}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<h2>Serviço - Apagar <strong>{{ service }}</strong></h2>
+
+<div>
+    <p>⚠️ Atenção: Você está prestes a excluir definitivamente este recurso do banco de dados. Essa operação é <strong>irreversível</strong>.</p>
+    <p>Deseja realmente continuar?</p>
+
+    <div class="d-flex justify-content-around align-items-center">
+        <a href="{% url 'record:index_customer' %}" class="btn btn-outline-primary">Cancelar</a>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Excluir</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

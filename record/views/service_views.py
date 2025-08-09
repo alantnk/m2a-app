@@ -83,7 +83,18 @@ def update_service_view(request, pk):
 
 @login_required
 def delete_service_view(request, pk):
-    return HttpResponse(f"Delete service view for service {pk}")
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == "POST":
+        service.delete()
+        success(request, "Serviço excluído com sucesso!")
+        return redirect(reverse("record:index_service"))
+    return render(
+        request,
+        "record/service/delete.html",
+        {
+            "service": service,
+        },
+    )
 
 
 @login_required
