@@ -22,7 +22,7 @@
 
     <div class="login-form">
         <h2>Iniciar sessão</h2>
-        <form method="post">
+        <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}

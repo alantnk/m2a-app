@@ -30,3 +30,15 @@ body {
     gap: 20px;
     margin: 10px 0;
 }
+
+.fa-pen-to-square {
+    color: #0d6efd;
+}
+
+.fa-trash-can {
+    color: #dc3545;
+}
+
+.fa-solid {
+    font-size: xx-large;
+}

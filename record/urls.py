@@ -10,11 +10,6 @@ customer_urls = [
         name="index_customer",
     ),
     path(
-        "customers/<int:pk>/",
-        views.detail_customer_view,
-        name="detail_customer",
-    ),
-    path(
         "customers/new/",
         views.create_customer_view,
         name="create_customer",

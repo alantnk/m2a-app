@@ -2,12 +2,13 @@
 {% block title %}Lista Clientes{% endblock title %}
 
 {% block content %}
-
+<h2>Lista Clientes</h2>
 {% url 'record:search_customer' as search_url %}
+
 <div class="d-flex justify-content-between">
     {% include "shared/search-form.html" with action=search_url %}
     {% include "shared/ordering-buttons.html" %}
 </div>
-{% include "shared/table.html" with object_list=page_obj.object_list %}
+{% include "shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" %}
 {% include "shared/pagination.html" %}
 {% endblock content %}

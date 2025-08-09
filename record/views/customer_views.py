@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from record.models import Customer
+from record.forms import CustomerForm
+from django.shortcuts import get_object_or_404
+from django.contrib.messages import success, error
 
 
 @login_required
@@ -11,7 +15,7 @@ from record.models import Customer
 def index_customer_view(request):
     ordering = request.GET.get("ordering", "name")
     customers = Customer.objects.all().order_by(ordering)
-    paginator = Paginator(customers, 4)
+    paginator = Paginator(customers, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(
@@ -25,18 +29,41 @@ def index_customer_view(request):
 
 
 @login_required
-def detail_customer_view(request, pk):
-    return HttpResponse(f"Details of customer {pk}")
-
-
-@login_required
 def create_customer_view(request):
     return HttpResponse("Create a new customer")
 
 
 @login_required
 def update_customer_view(request, pk):
-    return HttpResponse(f"Update customer {pk}")
+    customer = get_object_or_404(Customer, pk=pk)
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            customer.name = form.cleaned_data["name"]
+            customer.email = form.cleaned_data["email"]
+            customer.save()
+            success(request, "Cliente atualizado com sucesso!")
+            return redirect(reverse("record:index_customer"))
+        else:
+            error(
+                request,
+                "Ocorreu um erro ao atualizar o cliente. Por favor, verifique os dados.",  # noqa: E501
+            )
+    else:
+        form = CustomerForm(
+            initial={
+                "name": customer.name,
+                "email": customer.email,
+            }
+        )
+    return render(
+        request,
+        "record/customer/update.html",
+        {
+            "form": form,
+            "customer": customer,
+        },
+    )
 
 
 @login_required
