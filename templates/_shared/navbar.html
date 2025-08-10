@@ -16,7 +16,7 @@
           <a class="nav-link" href="{% url 'record:index_professional' %}">Profissionais</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Agendamentos</a>
+          <a class="nav-link" href="{% url 'appointment:index' %}">Agendamentos</a>
         </li>
         {% if user.is_staff %}
         <li class="nav-item">

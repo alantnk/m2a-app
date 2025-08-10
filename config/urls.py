@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("system/", include("system.urls")),
     path("record/", include("record.urls")),
+    path("appointment/", include("appointment.urls")),
     path("", RedirectView.as_view(url="system/dashboard/")),
 ]
 

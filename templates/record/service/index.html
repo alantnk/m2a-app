@@ -1,15 +1,14 @@
-{% extends "shared/_base.html" %}
-{% block title %}Lista Serviços{% endblock title %}
-
-{% block content %}
+{% extends "_shared/_base.html" %} {% block title %}Lista Serviços{% endblock title %} {% block content %}
 <h2>Lista Serviços</h2>
 {% url 'record:search_service' as search_url %}
 
-
 <div class="d-flex justify-content-between align-items-center">
-    {% include "shared/service-search-form.html" with action=search_url %}
+    {% include "_shared/service-search-form.html" with action=search_url %}
     <div class="add-button">
-        <a href="{% url 'record:create_service' %}" class="btn btn-outline-success">
+        <a
+            href="{% url 'record:create_service' %}"
+            class="btn btn-outline-success"
+        >
             <i class="fa-solid fa-circle-plus"></i>
         </a>
     </div>
@@ -18,16 +17,14 @@
 {% with service_list=page_obj.object_list %}
 <div>
     <ul class="list-group list-group-flush">
-    {% for service in service_list %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        {% for service in service_list %}
+        <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+        >
             <p>
                 {{ service.id }} -
-                <strong>
-                    {{ service }}
-                </strong>
-
+                <strong> {{ service }} </strong>
             </p>
-
 
             <div class="d-flex justify-content-around">
                 <a href="{% url 'record:update_service' service.id %}">
@@ -38,13 +35,9 @@
                 </a>
             </div>
         </li>
-    {% empty %}
+        {% empty %}
         <p class="text-center text-muted">Sem resultados</p>
-    {% endfor %}
+        {% endfor %}
     </ul>
 </div>
-{% endwith %}
-
-
-{% include "shared/pagination.html" %}
-{% endblock content %}
+{% endwith %} {% include "_shared/pagination.html" %} {% endblock content %}
