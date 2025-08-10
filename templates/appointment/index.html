@@ -8,6 +8,25 @@ Lista Agendamentos
 {% block content %}
 
 <h2>Lista Agendamentos</h2>
+{% with schedules=page_obj.object_list %}
+<ul class="list-group list-group-light my-5">
+    {% for sched in schedules %}
+        <li class="list-group-item">
+            <a class="link-secondary"
+                href="{% url 'appointment:detail' sched.id %}">
 
-
+                <strong>
+                    {{ sched.date_time|date:"d/m/Y" }}:
+                </strong>
+                Agendamento para cliente
+                <u>{{ sched.customer }}</u>
+                .
+            </a>
+        </li>
+    {% empty %}
+    <p>Sem resultados.</p>
+    {% endfor %}
+</ul>
+{% endwith %}
+{% include "_shared/pagination.html" %}
 {% endblock content %}

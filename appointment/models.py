@@ -40,6 +40,4 @@ class Schedule(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.date_time} - Serviço [{self.service}] - Profissional [{self.professional}] - Cliente [{self.customer}]"  # noqa E501
-
-    # noqa E501
+        return f"Schedule ID {self.id}"  # noqa E501

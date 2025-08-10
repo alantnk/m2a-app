@@ -10,8 +10,8 @@ from .forms import ScheduleForm
 
 
 def index(request):
-    schdules = Schedule.objects.all().order_by("-date", "-time")
-    paginator = Paginator(schdules, 10)  # Show 10 schedules per page
+    schedules = Schedule.objects.all().order_by("-date_time")
+    paginator = Paginator(schedules, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "appointment/index.html", {"page_obj": page_obj})
