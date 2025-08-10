@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
@@ -38,9 +39,12 @@ def create_service_view(request):
         form = ServiceForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data["title"]
-            Service.objects.create(title=title)
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_service"))
+            try:
+                Service.objects.create(title=title)
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_service"))
+            except IntegrityError:
+                error(request, "Erro: Já existe um serviço com esse nome.")
         else:
             error(request, SAVE_ERROR_MESSAGE)
     else:
@@ -63,9 +67,12 @@ def update_service_view(request, pk):
         if form.is_valid():
             title = form.cleaned_data["title"]
             service.title = title
-            service.save()
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_service"))
+            try:
+                service.save()
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_service"))
+            except IntegrityError:
+                error(request, "Erro: Já existe um serviço com esse nome.")
         else:
             error(request, SAVE_ERROR_MESSAGE)
     else:

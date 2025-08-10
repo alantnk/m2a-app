@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
@@ -37,9 +38,12 @@ def create_professional_view(request):
         if form.is_valid():
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
-            Professional.objects.create(name=name, email=email)
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_professional"))
+            try:
+                Professional.objects.create(name=name, email=email)
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_professional"))
+            except IntegrityError:
+                error(request, f"Erro: Email {email} já existe no sistema.")
         else:
             error(request, SAVE_ERROR_MESSAGE)
     else:
@@ -61,9 +65,15 @@ def update_professional_view(request, pk):
         if form.is_valid():
             professional.name = form.cleaned_data["name"]
             professional.email = form.cleaned_data["email"]
-            professional.save()
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_professional"))
+            try:
+                professional.save()
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_professional"))
+            except IntegrityError:
+                error(
+                    request,
+                    f"Erro: Email {professional.email} já existe no sistema.",
+                )
         else:
             error(
                 request,

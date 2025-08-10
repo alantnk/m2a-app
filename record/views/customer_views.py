@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
@@ -39,9 +40,12 @@ def create_customer_view(request):
         if form.is_valid():
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
-            Customer.objects.create(name=name, email=email)
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_customer"))
+            try:
+                Customer.objects.create(name=name, email=email)
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_customer"))
+            except IntegrityError:
+                error(request, f"Erro: Email {email} já existe no sistema.")
         else:
             error(request, SAVE_ERROR_MESSAGE)
     else:
@@ -63,13 +67,19 @@ def update_customer_view(request, pk):
         if form.is_valid():
             customer.name = form.cleaned_data["name"]
             customer.email = form.cleaned_data["email"]
-            customer.save()
-            success(request, SAVE_SUCCESS_MESSAGE)
-            return redirect(reverse("record:index_customer"))
+            try:
+                customer.save()
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("record:index_customer"))
+            except IntegrityError:
+                error(
+                    request,
+                    f"Erro: Email {customer.email} já existe no sistema.",
+                )
         else:
             error(
                 request,
-                SAVE_ERROR_MESSAGE,  # noqa: E501
+                SAVE_ERROR_MESSAGE,
             )
     else:
         form = ContactForm(
