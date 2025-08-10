@@ -1,12 +1,13 @@
 {% extends "_shared/_base.html" %}
+{% load bootstrap5 %}
 {% block title %}
-Dashboard
+Lista Agendamentos
 {% endblock title %}
+{% bootstrap_messages %}
+
 {% block content %}
 
-<div>
-    <h2>DASHBOARD</h2>
-    <p>WELCOME {{user.username}}</p>
-</div>
+<h2>Lista Agendamentos</h2>
+
 
 {% endblock content %}

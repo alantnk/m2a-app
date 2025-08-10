@@ -1,5 +1,8 @@
-{% extends "_shared/_base.html" %} {% block title %}Serviços - Resuldados para
-"{{ search_query }}"{% endblock title %} {% block content %}
+{% extends "_shared/_base.html" %}
+{% block title %}
+Serviços - Resuldados para "{{ search_query }}"
+{% endblock title %}
+{% block content %}
 <h2>Busca Serviço "{{ search_query }}"</h2>
 {% url 'record:search_service' as search_url %}
 
@@ -34,4 +37,6 @@
         {% endfor %}
     </ul>
 </div>
-{% endwith %} {% include "_shared/pagination.html" %} {% endblock content %}
+{% endwith %}
+{% include "_shared/pagination.html" %}
+{% endblock content %}

@@ -1,9 +1,16 @@
-{% extends "_shared/_base.html" %} {% load bootstrap5 %} {% block title %}Editar
-Serviço{% endblock title %} {% bootstrap_messages %} {% block content %}
+{% extends "_shared/_base.html" %}
+{% load bootstrap5 %}
+{% block title %}
+Editar Serviço
+{% endblock title %}
+{% bootstrap_messages %}
+{% block content %}
 
 <h2>Serviço - Detalhes de <strong>{{ service }}</strong></h2>
 <form method="post" class="form" novalidate>
-    {% csrf_token %} {% bootstrap_form form %} {% buttons %}
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
     <button type="submit" class="btn btn-primary">Salvar</button>
     {% endbuttons %}
 </form>

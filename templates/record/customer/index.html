@@ -1,10 +1,14 @@
-{% extends "_shared/_base.html" %} {% block title %}Lista Clientes{% endblock title %} {% block content %}
+{% extends "_shared/_base.html" %}
+{% block title %}
+Lista Clientes
+{% endblock title %}
+{% block content %}
 <h2>Lista Clientes</h2>
 {% url 'record:search_customer' as search_url %}
 
 <div class="d-flex justify-content-between align-items-center">
-    {% include "_shared/contact-search-form.html" with action=search_url %} {%
-    include "_shared/ordering-buttons.html" %}
+    {% include "_shared/contact-search-form.html" with action=search_url %}
+    {% include "_shared/ordering-buttons.html" %}
     <div class="add-button">
         <a
             href="{% url 'record:create_customer' %}"
@@ -14,6 +18,6 @@
         </a>
     </div>
 </div>
-{% include "_shared/table.html" with object_list=page_obj.object_list
-edit_url="record:update_customer" delete_url="record:delete_customer" %} {%
-include "_shared/pagination.html" %} {% endblock content %}
+{% include "_shared/table.html" with object_list=page_obj.object_list edit_url="record:update_customer" delete_url="record:delete_customer" %}
+{% include "_shared/pagination.html" %}
+{% endblock content %}

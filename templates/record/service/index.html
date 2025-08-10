@@ -1,4 +1,8 @@
-{% extends "_shared/_base.html" %} {% block title %}Lista Serviços{% endblock title %} {% block content %}
+{% extends "_shared/_base.html" %}
+{% block title %}
+Lista Serviços
+{% endblock title %}
+{% block content %}
 <h2>Lista Serviços</h2>
 {% url 'record:search_service' as search_url %}
 
@@ -40,4 +44,6 @@
         {% endfor %}
     </ul>
 </div>
-{% endwith %} {% include "_shared/pagination.html" %} {% endblock content %}
+{% endwith %}
+{% include "_shared/pagination.html" %}
+{% endblock content %}
