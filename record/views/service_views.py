@@ -8,7 +8,6 @@ from record.models import Service
 from record.forms import ServiceForm
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import success, error
-from django.http import HttpResponse
 
 SAVE_SUCCESS_MESSAGE = "Serviço salvo com sucesso!"
 SAVE_ERROR_MESSAGE = (
