@@ -1,11 +1,17 @@
+annotated-types==0.7.0
 asgiref==3.9.1
 Django==5.2.5
+django-bootstrap-datepicker-plus==5.0.5
 django-bootstrap5==25.2
 iniconfig==2.1.0
 packaging==25.0
 pluggy==1.6.0
+pydantic==2.11.7
+pydantic_core==2.33.2
 Pygments==2.19.2
 pytest==8.4.1
 pytest-django==4.11.1
 python-decouple==3.8
 sqlparse==0.5.3
+typing-inspection==0.4.1
+typing_extensions==4.14.1

@@ -6,7 +6,18 @@ Dashboard
 
 <div>
     <h2>DASHBOARD</h2>
-    <p>WELCOME {{user.username}}</p>
+    <p class="text-info">Bem-vindo(a), {{user.username}}.</p>
+
+        <div class="row gap-5">
+            {% include "_shared/card.html" with title="Clientes" count=customer_count go_url="record:index_customer" %}
+            {% include "_shared/card.html" with title="Serviços" count=service_count go_url="record:index_service" %}
+
+
+            {% include "_shared/card.html" with title="Profissionais" count=professional_count go_url="record:index_professional" %}
+
+            {% include "_shared/card.html" with title="Agendamentos" count=appointment_count go_url="appointment:index" %}
+        </div>
+
 </div>
 
 {% endblock content %}
