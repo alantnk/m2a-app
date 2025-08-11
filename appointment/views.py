@@ -10,7 +10,7 @@ from django.contrib.messages import success, error
 from .models import Schedule
 from .forms import ScheduleForm, FilterForm
 
-SAVE_SUCCESS_MESSAGE = "Agendamento criado com sucesso."
+SAVE_SUCCESS_MESSAGE = "Agendamento salvo com sucesso."
 SAVE_ERROR_MESSAGE = "Houve um erro ao criar o agendamento. Verifique o formulário e tente novamente."  # noqa: E501
 
 
@@ -95,9 +95,49 @@ def create(request):
 
 @login_required
 def update(request, pk):
-    return HttpResponse(
-        f"This is the appointment update page for appointment {pk}."
-    )  # noqa: E501
+    schedule = get_object_or_404(Schedule, pk=pk)
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            date_at = form.cleaned_data["date_at"]
+            time_at = form.cleaned_data["time_at"]
+            professional = form.cleaned_data["professional"]
+            customer = form.cleaned_data["customer"]
+            service = form.cleaned_data["service"]
+            status = form.cleaned_data["status"]
+            try:
+                schedule.date_time = datetime.combine(date_at, time_at)
+                schedule.professional = professional
+                schedule.customer = customer
+                schedule.service = service
+                schedule.status = status
+                schedule.save()
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("appointment:index"))
+            except IntegrityError:
+                error(
+                    request,
+                    f"Existe um agendamento para {date_at} às {time_at} com o profissional {professional}.",  # noqa: E501
+                )
+
+        else:
+            error(request, SAVE_ERROR_MESSAGE)
+
+    form = ScheduleForm(
+        initial={
+            "status": schedule.status,
+            "professional": schedule.professional,
+            "customer": schedule.customer,
+            "service": schedule.service,
+            "date_at": schedule.date_time.date(),
+            "time_at": schedule.date_time.time(),
+        }
+    )
+    return render(
+        request,
+        "appointment/update.html",
+        {"form": form, "schedule": schedule},  # noqa: E501
+    )
 
 
 @login_required
