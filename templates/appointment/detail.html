@@ -1,0 +1,34 @@
+{% extends "_shared/_base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}
+{{ schedule }}
+{% endblock title %}
+{% bootstrap_messages %}
+{% block content %}
+
+<h2>{{ schedule }}</h2>
+
+<div>
+    <p>
+        <strong>Data: </strong> {{ schedule.date_time }}
+    </p>
+    <p>
+        <strong>Profissional: </strong> {{ schedule.professional }} (ID: {{ schedule.professional.id }})
+    </p>
+    <p>
+        <strong>Cliente: </strong> {{ schedule.customer }} (ID: {{ schedule.customer.id }})
+    </p>
+    <p>
+        <strong>Serviço: </strong> {{ schedule.service }} (ID: {{ schedule.service.id }})
+    </p>
+    <p>
+        <strong>Status: </strong> {{ schedule.get_status_display }}
+    </p>
+    <p>
+        <strong></strong>
+    </p>
+
+    <a href="{% url 'appointment:update' schedule.id %}" class="btn btn-primary">Alterar</a>
+</div>
+
+{% endblock content %}

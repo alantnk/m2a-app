@@ -40,4 +40,4 @@ class Schedule(models.Model):
         ]
 
     def __str__(self):
-        return f"Schedule ID {self.id}"  # noqa E501
+        return f"Agendamento Nº {self.id}"  # noqa E501

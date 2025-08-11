@@ -102,6 +102,5 @@ def update(request, pk):
 
 @login_required
 def detail(request, pk):
-    return HttpResponse(
-        f"This is the appointment detail page for appointment {pk}."
-    )  # noqa: E501
+    schedule = get_object_or_404(Schedule, pk=pk)
+    return render(request, "appointment/detail.html", {"schedule": schedule})
