@@ -43,12 +43,12 @@ Execute os dados iniciais
 $ python3 manage.py loaddata db.json
 ```
 
-### 7. Testes (incompleto)
+### 7. Inicie o projeto
 
-Execute os testes:
+Inicie o projeto
 
 ```bash
-$ pytest
+$ python3 manage.py runserver
 ```
 
 ## Acesso
@@ -59,3 +59,11 @@ Caso siga o item **6 Carregue o Banco de Dados** os seguintes usuários terão a
 2. **username:** jane (acesso básico)
 
 A senha para ambos é **qwerty**.
+
+## Testes (incompleto)
+
+Execute os testes:
+
+```bash
+$ pytest
+```
