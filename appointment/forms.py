@@ -8,9 +8,28 @@ from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 
 class ScheduleForm(forms.Form):
-    date_time = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={"type": "datetime-local"}),
-        label="Data e Hora",
+    date_at = forms.DateField(
+        widget=DatePickerInput(
+            format="%d/%m/%Y",
+            attrs={
+                "autocomplete": "off",
+                "class": "form-control",
+            },
+        ),
+        label="Data",
+        initial=datetime.now(),
+    )
+    time_at = forms.TimeField(
+        widget=forms.TimeInput(
+            format="%H:%M",
+            attrs={
+                "autocomplete": "off",
+                "class": "form-control",
+                "type": "time",
+            },
+        ),
+        label="Hora",
+        initial=datetime.now(),
     )
     professional = forms.ModelChoiceField(
         queryset=Professional.objects.all(),

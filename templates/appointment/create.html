@@ -1,17 +1,18 @@
 {% extends "_shared/_base.html" %}
 {% load django_bootstrap5 %}
 {% block title %}
-Novo Cliente
+Novo Agendamento
 {% endblock title %}
 {% bootstrap_messages %}
 {% block content %}
 
-<h2>Adicionar novo Cliente</h2>
+<h2>Adicionar novo Agendamento</h2>
+{{ form.media }}
 <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% bootstrap_form form %}
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
 
 </form>
 

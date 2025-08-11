@@ -1,19 +1,25 @@
 from datetime import datetime, timedelta
+from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Schedule
 from django.urls import reverse
+from django.contrib.messages import success, error
+from .models import Schedule
 from .forms import ScheduleForm, FilterForm
-from django.db.models import Q
+
+SAVE_SUCCESS_MESSAGE = "Agendamento criado com sucesso."
+SAVE_ERROR_MESSAGE = "Houve um erro ao criar o agendamento. Verifique o formulário e tente novamente."  # noqa: E501
 
 
+@login_required
+@require_GET
 def index(request):
     start_date = datetime.now() - timedelta(days=30)  # noqa: E501
     end_date = datetime.now() + timedelta(days=30)  # noqa: E501
-    all_schedules = Schedule.objects.all().order_by("-date_time")
+    all_schedules = Schedule.objects.all().order_by("date_time")
     status = "all"
     filter_form = FilterForm(request.GET or None)
     schedules = all_schedules.filter(date_time__range=(start_date, end_date))
@@ -25,16 +31,16 @@ def index(request):
         start_date = filter_form.cleaned_data.get("start_date")
         end_date = filter_form.cleaned_data.get("end_date")
         status = filter_form.cleaned_data.get("status")
-
+        filtered_schedules = all_schedules
         if start_date and end_date:
-            schedules = all_schedules.filter(
+            filtered_schedules = filtered_schedules.filter(
                 date_time__range=(start_date, end_date)
             )  # noqa: E501
 
         if status and status != "all":
-            schedules = all_schedules.filter(status=status)
+            filtered_schedules = filtered_schedules.filter(status=status)
 
-        paginator = Paginator(schedules, 10)
+        paginator = Paginator(filtered_schedules, 10)
         page_obj = paginator.get_page(page_number)
 
     return render(
@@ -50,16 +56,51 @@ def index(request):
     )
 
 
+@login_required
 def create(request):
-    return HttpResponse("This is the appointment create page.")
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            date_at = form.cleaned_data["date_at"]
+            time_at = form.cleaned_data["time_at"]
+            professional = form.cleaned_data["professional"]
+            customer = form.cleaned_data["customer"]
+            service = form.cleaned_data["service"]
+            status = form.cleaned_data["status"]
+            try:
+                Schedule.objects.create(
+                    date_time=datetime.combine(date_at, time_at),
+                    professional=professional,
+                    customer=customer,
+                    service=service,
+                    status=status,
+                )
+                success(request, SAVE_SUCCESS_MESSAGE)
+                return redirect(reverse("appointment:index"))
+            except IntegrityError:
+                error(
+                    request,
+                    f"Existe um agendamento para {date_at} às {time_at} com o profissional {professional}.",  # noqa: E501
+                )
+        else:
+            error(
+                request,
+                SAVE_ERROR_MESSAGE,
+            )
+    else:
+        form = ScheduleForm()
+
+    return render(request, "appointment/create.html", {"form": form})
 
 
+@login_required
 def update(request, pk):
     return HttpResponse(
         f"This is the appointment update page for appointment {pk}."
     )  # noqa: E501
 
 
+@login_required
 def detail(request, pk):
     return HttpResponse(
         f"This is the appointment detail page for appointment {pk}."
