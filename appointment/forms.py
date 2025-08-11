@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 from django import forms
 from .models import STATUS_CHOICES
 from record.models import Customer, Professional, Service
@@ -41,7 +41,6 @@ class FilterForm(forms.Form):
             attrs={
                 "autocomplete": "off",
                 "class": "form-control",
-                "value": datetime.now().date(),
             },
             options={
                 "format": "DD/MM/YYYY",
@@ -50,6 +49,7 @@ class FilterForm(forms.Form):
             },
         ),
         label="Data Inicial",
+        initial=(timezone.now() - timezone.timedelta(days=30)).strftime("%Y-%m-%d"),
     )
     end_date = forms.DateField(
         widget=DatePickerInput(
@@ -57,7 +57,6 @@ class FilterForm(forms.Form):
             attrs={
                 "autocomplete": "off",
                 "class": "form-control",
-                "value": datetime.now().date(),
             },
             options={
                 "format": "DD/MM/YYYY",
@@ -66,12 +65,13 @@ class FilterForm(forms.Form):
             },
         ),
         label="Data Final",
+        initial=(timezone.now() + timezone.timedelta(days=30)).strftime("%Y-%m-%d"),
     )
 
     status = forms.ChoiceField(
         choices=[("all", "Todos")] + STATUS_CHOICES,
         label="Status",
-        widget=forms.Select(attrs={"class": "form-select", "value": "all"}),
+        widget=forms.Select(attrs={"class": "form-select"}),
     )
 
     def clean(self):
