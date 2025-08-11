@@ -17,7 +17,6 @@ class ScheduleForm(forms.Form):
             },
         ),
         label="Data",
-        initial=datetime.now(),
     )
     time_at = forms.TimeField(
         widget=forms.TimeInput(
@@ -29,7 +28,6 @@ class ScheduleForm(forms.Form):
             },
         ),
         label="Hora",
-        initial=datetime.now(),
     )
     professional = forms.ModelChoiceField(
         queryset=Professional.objects.all(),

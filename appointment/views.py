@@ -87,7 +87,12 @@ def create(request):
                 SAVE_ERROR_MESSAGE,
             )
     else:
-        form = ScheduleForm()
+        form = ScheduleForm(
+            initial={
+                "date_at": datetime.now().date(),
+                "time_at": datetime.now().time(),
+            }
+        )
 
     return render(request, "appointment/create.html", {"form": form})
 
