@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "record.apps.RecordConfig",
     "appointment.apps.AppointmentConfig",
     # Third-party apps
-    "bootstrap5",
+    "django_bootstrap5",
+    "bootstrap_datepicker_plus",
 ]
 
 MIDDLEWARE = [

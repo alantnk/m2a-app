@@ -1,5 +1,5 @@
 {% extends "_shared/_base.html" %}
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 {% block title %}
 Novo Cliente
 {% endblock title %}
@@ -10,9 +10,9 @@ Novo Cliente
 <form method="post" class="form" novalidate>
     {% csrf_token %}
     {% bootstrap_form form %}
-    {% buttons %}
+
     <button type="submit" class="btn btn-primary">Salvar</button>
-    {% endbuttons %}
+
 </form>
 
 {% endblock content %}

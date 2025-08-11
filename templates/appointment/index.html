@@ -1,5 +1,5 @@
 {% extends "_shared/_base.html" %}
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 {% block title %}
 Lista Agendamentos
 {% endblock title %}
@@ -8,6 +8,25 @@ Lista Agendamentos
 {% block content %}
 
 <h2>Lista Agendamentos</h2>
+<div class="d-flex justify-content-between align-items-center">
+
+    {{ filter_form.media }}
+    <form method="get" class="d-flex justify-content-between align-items-center" style="gap: 10px;" novalidate>
+        {% bootstrap_form filter_form %}
+
+        <button type="submit" class="btn btn-primary">Buscar</button>
+
+    </form>
+
+    <div class="add-button">
+        <a
+            href="{% url 'appointment:create' %}"
+            class="btn btn-outline-success"
+        >
+            <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>
+</div>
 {% with schedules=page_obj.object_list %}
 <ul class="list-group list-group-light my-5">
     {% for sched in schedules %}
