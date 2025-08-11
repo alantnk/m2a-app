@@ -1,4 +1,7 @@
 {% if page_obj.paginator.num_pages > 1 %}
+{% with start_date=start_date|date:"Y-m-d"  end_date=end_date|date:"Y-m-d" %}
+
+
 <nav aria-label="Page navigation">
     <ul class="pagination">
         {% if page_obj.has_previous %}
@@ -101,4 +104,5 @@
 <div class="pagination-info text-muted small">
     Exibindo {{ page_obj.start_index }} a {{ page_obj.end_index }} de {{ page_obj.paginator.count }} registros
 </div>
+{% endwith %}
 {% endif %}

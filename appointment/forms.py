@@ -1,4 +1,4 @@
-from django.utils import timezone
+from datetime import datetime, timedelta
 from django import forms
 from .models import STATUS_CHOICES
 from record.models import Customer, Professional, Service
@@ -42,14 +42,9 @@ class FilterForm(forms.Form):
                 "autocomplete": "off",
                 "class": "form-control",
             },
-            options={
-                "format": "DD/MM/YYYY",
-                "locale": "pt-br",
-                "showTodayButton": True,
-            },
         ),
         label="Data Inicial",
-        initial=(timezone.now() - timezone.timedelta(days=30)).strftime("%Y-%m-%d"),
+        initial=(datetime.now() - timedelta(days=30)),
     )
     end_date = forms.DateField(
         widget=DatePickerInput(
@@ -58,14 +53,9 @@ class FilterForm(forms.Form):
                 "autocomplete": "off",
                 "class": "form-control",
             },
-            options={
-                "format": "DD/MM/YYYY",
-                "locale": "pt-br",
-                "showTodayButton": True,
-            },
         ),
         label="Data Final",
-        initial=(timezone.now() + timezone.timedelta(days=30)).strftime("%Y-%m-%d"),
+        initial=(datetime.now() + timedelta(days=30)),
     )
 
     status = forms.ChoiceField(

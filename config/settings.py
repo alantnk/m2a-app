@@ -109,7 +109,7 @@ TIME_ZONE = "America/Fortaleza"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -127,3 +127,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGOUT_REDIRECT_URL = "/system/login/"
 
 LOGIN_URL = "/system/login/"
+
+SHORT_DATE_FORMAT = "YYYY-MM-DD"
+BOOTSTRAP_DATEPICKER_PLUS = {
+    "options": {
+        "format": "YYYY-MM-DD",
+        "locale": "pt-br",
+        "showTodayButton": True,
+    },
+}
