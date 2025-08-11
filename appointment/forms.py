@@ -1,8 +1,10 @@
+from datetime import datetime
 from django import forms
 from .models import STATUS_CHOICES
 from record.models import Customer, Professional, Service
 from bootstrap_datepicker_plus.widgets import DatePickerInput
-from django.utils import timezone
+
+# from django.utils import timezone
 
 
 class ScheduleForm(forms.Form):
@@ -39,7 +41,7 @@ class FilterForm(forms.Form):
             attrs={
                 "autocomplete": "off",
                 "class": "form-control",
-                # "value": timezone.now().date().strftime("%d/%m/%Y"),
+                "value": datetime.now().date(),
             },
             options={
                 "format": "DD/MM/YYYY",
@@ -55,7 +57,7 @@ class FilterForm(forms.Form):
             attrs={
                 "autocomplete": "off",
                 "class": "form-control",
-                # "value": timezone.now().date().strftime("%d/%m/%Y"),
+                "value": datetime.now().date(),
             },
             options={
                 "format": "DD/MM/YYYY",
@@ -69,7 +71,7 @@ class FilterForm(forms.Form):
     status = forms.ChoiceField(
         choices=[("all", "Todos")] + STATUS_CHOICES,
         label="Status",
-        widget=forms.Select(attrs={"class": "form-select"}),
+        widget=forms.Select(attrs={"class": "form-select", "value": "all"}),
     )
 
     def clean(self):
