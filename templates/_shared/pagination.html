@@ -4,11 +4,15 @@
         {% if page_obj.has_previous %}
             <li class="page-item">
                 {% if ordering %}
-                    <a class="page-link" href="?ordering={{ ordering }}&page={{ previous_page_number }}">{{ previous_page_number }}</a>
+                    <a class="page-link" href="?ordering={{ ordering }}&page={{ page_obj.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 {% elif start_date and end_date and status %}
-                    <a class="page-link" href="?start_date={{ start_date }}&end_date={{ end_date }}&status={{ status }}&page={{ previous_page_number }}">{{ previous_page_number }}</a>
+                    <a class="page-link" href="?start_date={{ start_date }}&end_date={{ end_date }}&status={{ status }}&page={{ page_obj.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 {% else %}
-                    <a class="page-link" href="?page={{ previous_page_number }}">{{ previous_page_number }}</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a>
                 {% endif %}
             </li>
         {% else %}
@@ -71,11 +75,16 @@
 
             <li class="page-item">
                 {% if ordering %}
-                    <a class="page-link" href="?ordering={{ ordering }}&page={{ next_page_number }}">{{ next_page_number }}</a>
+                    <a class="page-link" href="?ordering={{ ordering }}&page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span></a>
                 {% elif start_date and end_date and status %}
-                    <a class="page-link" href="?start_date={{ start_date }}&end_date={{ end_date }}&status={{ status }}&page={{ next_page_number }}">{{ next_page_number }}</a>
+                    <a class="page-link" href="?start_date={{ start_date }}&end_date={{ end_date }}&status={{ status }}&page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
                 {% else %}
-                    <a class="page-link" href="?page={{ next_page_number }}">{{ next_page_number }}</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
                 {% endif %}
 
             </li>
