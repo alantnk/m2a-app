@@ -133,9 +133,8 @@ def search_customer_view(request):
     )
 
 
-"__all__" == [
+__all__ = [
     "index_customer_view",
-    "detail_customer_view",
     "create_customer_view",
     "update_customer_view",
     "delete_customer_view",

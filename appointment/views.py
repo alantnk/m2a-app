@@ -18,7 +18,9 @@ SAVE_ERROR_MESSAGE = "Houve um erro ao criar o agendamento. Verifique o formulá
 def index(request):
     start_date = datetime.now() - timedelta(days=30)  # noqa: E501
     end_date = datetime.now() + timedelta(days=30)  # noqa: E501
-    all_schedules = Schedule.objects.all().order_by("date_time")
+    all_schedules = Schedule.objects.select_related(
+        "professional", "customer", "service"
+    ).order_by("date_time")
     status = "all"
     filter_form = FilterForm(request.GET or None)
     schedules = all_schedules.filter(date_time__range=(start_date, end_date))
@@ -99,7 +101,14 @@ def create(request):
 
 @login_required
 def update(request, pk):
-    schedule = get_object_or_404(Schedule, pk=pk)
+    schedule = get_object_or_404(
+        Schedule.objects.select_related(
+            "professional",
+            "customer",
+            "service",
+        ),
+        pk=pk,
+    )
     if request.method == "POST":
         form = ScheduleForm(request.POST)
         if form.is_valid():
@@ -146,11 +155,18 @@ def update(request, pk):
 
 @login_required
 def detail(request, pk):
-    schedule = get_object_or_404(Schedule, pk=pk)
+    schedule = get_object_or_404(
+        Schedule.objects.select_related(
+            "professional",
+            "customer",
+            "service",
+        ),
+        pk=pk,
+    )
     return render(request, "appointment/detail.html", {"schedule": schedule})
 
 
-"__all__" == [
+__all__ = [
     "index",
     "create",
     "update",

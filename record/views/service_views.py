@@ -120,7 +120,7 @@ def search_service_view(request):
     )
 
 
-"__all__" == [
+__all__ = [
     "index_service_view",
     "create_service_view",
     "update_service_view",

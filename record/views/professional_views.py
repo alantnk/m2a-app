@@ -133,7 +133,7 @@ def search_professional_view(request):
     )
 
 
-"__all__" == [
+__all__ = [
     "index_professional_view",
     "create_professional_view",
     "update_professional_view",

@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import RedirectView
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,7 +28,7 @@ urlpatterns = [
     path("record/", include("record.urls")),
     path("appointment/", include("appointment.urls")),
     path("", RedirectView.as_view(url="system/dashboard/")),
-]
+] + debug_toolbar_urls()
 
 if settings.DEBUG:
     urlpatterns += static(
